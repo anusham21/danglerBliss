@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Data </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script>
+		var count = 0;
+		var heart = 0;
+		var like = 0;
+		var comment = 0;
+		function postScrap() {
+			var Scraptxt1 = document.getElementById("scraptext").value;
+			if (Scraptxt1 == "" || Scraptxt1 == null) {
+				alert("Please Scrap something to Post!!!");
+			} else {
+				//document.getElementById("Scraptext1").innerHTML = Scraptxt1;
+				var time = new Date();
+				var dateStamp = time.toDateString();
+				var timeStamp = time.toLocaleTimeString();
+				var postitem = "<li id='anusha'>";
+				postitem += "<a href='#'><h4 class='list-group-item-heading'>";
+				postitem += "<span class='glyphicon glyphicon-user'></span> Anusha Matcha </h4></a>";
+				postitem += "<textarea name='scrapText' class='list-group-item-text' id='Scraptext4' cols='100' rows='2'>" + Scraptxt1 + "</textarea> ";
+				postitem += "<a href='#'><span id='delete'  style='float: right;' class='glyphicon glyphicon-trash'></span></a>";
+				postitem += "<p id='time-holder' style='float: right;' >" + "<b>Time:</b>" + timeStamp + " <b> Date:</b>" + dateStamp + "</p><br>";
+
+				postitem += "<a href='#'><span id ='heart' class='glyphicon glyphicon-heart'></span></a>";
+				postitem += "<a href='#'><b id='like'>Likes</b> </a>";
+				postitem += "<a href='#'><b><span id='comment'>Comments</span></b></a>";
+				postitem += "<ul id='commentli' style='border: 5px solid white;'></ul>";
+
+
+				postitem += "</li>";
+
+				$("#posts").append(postitem);
+				//TO delete the Scaps posted
+				$("#delete").click(function () {
+					$(this).parent().parent().remove();
+				});
+				//To update the number of scraps in the Badge
+				count++;
+				$("#cnt").text(count);
+				//To make the scrap writtenin the Text Box to Null after Posting
+				$("#scraptext").val("");
+				//Heart functionality
+				$(".glyphicon").click(function () {
+					heart++;
+					$(this).css("color", "#FF69B4");
+					$(this).text(heart);
+
+				})
+
+				//Likes Functionality
+				$("#like").click(function () {
+					like++;
+					$("#like").html("<a href='#'><b>Likes :</b></a>" + like);
+				})
+				//comments functionality
+				$("#comment").click(function () {
+
+					$("#comment").html("<a href='#'><b><span id='comment'>Comments :</span></b></a>" + comment);
+					//$("#commentli").html("<b>comment anusha html</b>");
+					$("#commentli").html("<div id=mainchildtextarea ><textarea id='mainchildComment' placeholder='Please enter your comment here' name='mainchildComment'  class='list-group-item-text well well-sm' rows='1' style='min-width: 40%'> </textarea><button id='sendbtn1' type='button' class='btn btn-success'>Send</button></div></li><br>");
+					//var childtxtarea = document.getElementById("mainchildComment").value;
+					//if (childtxtarea == "" || childtxtarea == null) {
+					//		alert("Please Enter the Comment and Send");
+
+				//	} else {
+
+						//to click on send button update comment list
+						$("#sendbtn1").click(function () {
+							comment++;
+
+							$("#comment").html("<a href='#'><b><span id='comment'>Comments :</span></b></a>" + comment);
+							var childtxtarea = document.getElementById("mainchildComment").value;
+							var commentlist = "<li><span class='glyphicon glyphicon-user'></span> AM";
+							commentlist+= "<div id=childtextarea class='form-group list-group'><textarea id='childComment' name='childComment' class='form-control list-group-item' rows='1'>" + childtxtarea + " </textarea>";
+							commentlist+= "<a href='#'><span id='delete1'  style='float: right;' class='glyphicon glyphicon-trash'></span></a></div></li><br>";
+							$("#commentli").append(commentlist);
+							//TO delete the Scaps posted
+							$("#delete1").click(function () {
+								$(this).parent().parent().remove();
+								$("#childcomment").val("");
+							})
+							$("#mainchildComment").val("");
+						})
+				//	}
+				})//close comment click func
+
+				//next functionality
+
+			}//post scrap else func closu
+		}
+	</script>
+</head>
+<style>
+	.spaceclass {
+		padding-left: 10px;
+	}
+</style>
+
+<body style="background-color:#80ABE2">
+	<div class="container-fluid">
+		<h1>Ankut Home Page</h1>
+		<div class="col-sm-2" style="border: 10px solid white">
+			<div class="row">
+				<div class="col-sm-12" style="background-color :#DFF0FF;height:200px;;border:10px solid white">
+					<img class="img-responsive rounded" src="loginMan.jpg" alt="loginman" width="150" height="120">
+				</div>
+				<div class="col-sm-12" style="background-color:#DFF0FF;height:470px;border:10px solid white">
+					<div class="btn-group-vertical"> <br>
+						<button type="button" class="btn btn-primary">About </button>
+						<button type="button" class="btn btn-primary active">Scraps</button>
+						<button type="button" class="btn btn-primary">Games</button>
+						<button type="button" class="btn btn-primary">Education Details</button>
+						<button type="button" class="btn btn-primary">Proffestional Details</button>
+						<button type="button" class="btn btn-primary">Intrests</button>
+						<button type="button" class="btn btn-primary">Profile Details</button>
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-12" style="background-color: #DFF0FF; height:220px; border: 10px solid white">
+					<p><b style="color:#126FC5;">SCRAP BOX </b> </p>
+					<div class="form-group">
+						<textarea placeholder="Please enter your scrap here" id="scraptext" class="scraptext" value="Some text.." cols="160" rows="5"></textarea>
+						<p>
+							<b> <br>Scraps <span id = "cnt" class="badge">0</span> Photos <span class="badge">20</span> Vedios <span class="badge">10</span>Abums <span class="badge">6</span>
+							<button type="button" style="float: right;" class="btn btn-success" onclick="postScrap()">Post</button>	
+						</b>
+						</p>
+					</div>
+				</div>
+				<div class="col-sm-12" style="background-color: #DFF0FF ;height:auto; border: 10px solid white">
+					<h3>Scraps</h3>
+					<ul id="posts" class="list-group">
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+
+
+</html>

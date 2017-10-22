@@ -1,0 +1,20 @@
+
+
+2 ) SELECT scrap_data FROM `scrap` WHERE likes_count IN (SELECT MAX(likes_count) FROM `scrap`)
+3) SELECT scrap_data FROM `scrap` WHERE likes_count>comments_count
+4). Query to display scraps posted with in last 1 hour
+
+Ans SELECT * FROM `scrap` where date >= DATE_SUB(NOW(),INTERVAL 1 HOUR); 
+5) a)SELECT * FROM `scrap` WHERE scrap_data LIKE '%how%'
+5 b)SELECT scrap.scrap_data, user_details.uname FROM `scrap` INNER JOIN `user_details` WHERE scrap.uid =user_details.uid AND scrap_data LIKE '%how%'
+
+6. Query to display comments made by a user (ex 'jyothi)
+6 SELECT user_details.uname,scrap_comments.comment_text FROM `user_details` INNER JOIN `scrap_comments`WHERE user_details.uid=scrap_comments.uid AND uname='aritrag'
+ANS: SELECT * FROM `scrap` where created_on >= DATE_SUB(NOW(),INTERVAL 1 HOUR); 
+
+
+7)i want scraps from yesterday to today[current date -yesterAns1 day interval]
+SELECT scrap_data FROM scrap WHERE date(created_on) BETWEEN date(CURDATE() - INTERVAL 1 DAY) AND date(CURDATE());
+KARAN Inteview Questions
+
+Difference between include if not available it will and require throws error if we dont include

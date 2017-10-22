@@ -1,13 +1,38 @@
-<!DOCTYPE html>
-<html>
-<li>
-<span class="glyphicon glyphicon-user">
-</span> AM";
-<div id="childtextarea" class="form-group list-group">
-<textarea id="childComment" name="childComment" class="form-control list-group-item" rows="1">"
-  childtxtarea 
- </textarea>";
-<a href="#"><span id="delete1"  style="float: right;" class="glyphicon glyphicon-trash"></span></a>
-</div>
-</li><br>
-</html>
+//Likes Functionality
+				$("#like").click(function () {
+					like++;
+					$("#like").html("<a href='#'><b>Likes :</b></a>" + like);
+				});
+				//comments functionality
+				$("#comment").click(function () {
+
+					$("#comment").html("<a href='#'><b><span id='comment'>Comments :</span></b></a>" + comment);
+					//$("#commentli").html("<b>comment anusha html</b>");
+					$("#commentli").html("<li><div id=mainchildtextarea ><textarea id='mainchildComment' placeholder='Please enter your comment here' name='mainchildComment'  class='list-group-item-text well well-sm' rows='1' style='min-width: 0%'> </textarea><button id='sendbtn1' type='button' class='btn btn-success'>Send</button></div></li><br>");
+					//var childtxtarea = document.getElementById("mainchildComment").value;
+					//if (childtxtarea == "" || childtxtarea == null) {
+					//		alert("Please Enter the Comment and Send");
+
+				//	} else {
+
+						//to click on send button update comment list
+						$("#sendbtn1").click(function () {
+							comment++;
+
+							$("#comment").html("<a href='#'><b><span id='comment'>Comments :</span></b></a>" + comment);
+							$("#comment").html("<span class='glyphicon glyphicon-remove' style='float: right;' onclick='hideCommentSection(this)'></span>");
+							var childtxtarea = document.getElementById("mainchildComment").value;
+							var commentlist = "<span class='glyphicon glyphicon-user'></span> AM";
+							commentlist+= "<div id=childtextarea class='form-group list-group'><textarea id='childComment' name='childComment' class='form-control list-group-item' rows='1'>" + childtxtarea + " </textarea>";
+
+							commentlist+= "<a href='#'><span id='delete1'  style='float: right;' class='glyphicon glyphicon-trash'></span></a></div></li><br>";
+							$("#commentli").append(commentlist);
+							//TO delete the Scaps posted
+							$("#delete1").click(function () {
+								$(this).parent().parent().parent().remove();
+								$("#childcomment").val("");
+							});
+							$("#mainchildComment").val("");
+						});
+				//	}
+				});

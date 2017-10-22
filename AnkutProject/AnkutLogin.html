@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<title>Login Ankut Page</title>
+	<style>
+		form {
+					}
+	</style>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		function scrapbook() {
+			window.location = './scrapBook.php';
+
+		}
+		function registration_page() {
+			window.location = './ankut_register_page.html'
+		}
+		function validateForm() {
+			var username = document.getElementById("uname").value;
+			var upassword = document.getElementById("upwd").value;
+
+			if (username == "" || username == null) {
+				alert("User Name cannot be empty");
+				return false;
+
+			} else if (upassword == "" || upassword == null) {
+				alert("Password field cannot be empty");
+				return false;
+			}else{
+				checkname();
+			}
+			
+			//LoginFormSucess();
+			//scrapbook();
+
+		}
+		//	function LoginFormSucess() {
+		// document.getElementById("register").submit();
+		//          window.alert(" Login Form is done Sucessfully.")
+		//}
+
+		function checkname() {
+			var name = document.getElementById("uname").value;
+			var pwd = document.getElementById("upwd").value;
+			$.ajax({
+				type: 'post',
+				url: 'checklogindata.php',
+				data: "username=" + name + "&pwd=" + pwd,
+				//contentType:"application/text",
+				success: function (response) {
+					console.log(response);
+					if(response.trim()=="success"){
+						alert("login perfect");
+						window.location.href="./scrapBook.php";
+					}else{
+						alert("Username or password doesn't match!!");
+						return false;
+					}
+				}
+			});
+			return false;
+		}
+
+		//FOR CANVAS
+		function initialize() {
+
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var radius = canvas.height / 2;
+			ctx.translate(radius, radius);
+			radius = radius * 0.90
+			setInterval(drawClock, 1000);
+
+			function drawClock() {
+				drawFace(ctx, radius);
+				drawNumbers(ctx, radius);
+				drawTime(ctx, radius);
+			}
+
+			function drawFace(ctx, radius) {
+				var grad;
+				ctx.beginPath();
+				ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+				ctx.fillStyle = 'white';
+				ctx.fill();
+				grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+				grad.addColorStop(0, '#333');
+				grad.addColorStop(0.5, 'white');
+				grad.addColorStop(1, '#333');
+				ctx.strokeStyle = grad;
+				ctx.lineWidth = radius * 0.1;
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+				ctx.fillStyle = '#333';
+				ctx.fill();
+			}
+
+			function drawNumbers(ctx, radius) {
+				var ang;
+				var num;
+				ctx.font = radius * 0.15 + "px arial";
+				ctx.textBaseline = "middle";
+				ctx.textAlign = "center";
+				for (num = 1; num < 13; num++) {
+					ang = num * Math.PI / 6;
+					ctx.rotate(ang);
+					ctx.translate(0, -radius * 0.85);
+					ctx.rotate(-ang);
+					ctx.fillText(num.toString(), 0, 0);
+					ctx.rotate(ang);
+					ctx.translate(0, radius * 0.85);
+					ctx.rotate(-ang);
+				}
+			}
+
+			function drawTime(ctx, radius) {
+				var now = new Date();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				//hour
+				hour = hour % 12;
+				hour = (hour * Math.PI / 6) +
+					(minute * Math.PI / (6 * 60)) +
+					(second * Math.PI / (360 * 60));
+				drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+				//minute
+				minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+				drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+				// second
+				second = (second * Math.PI / 30);
+				drawHand(ctx, second, radius * 0.9, radius * 0.02);
+			}
+
+			function drawHand(ctx, pos, length, width) {
+				ctx.beginPath();
+				ctx.lineWidth = width;
+				ctx.lineCap = "round";
+				ctx.moveTo(0, 0);
+				ctx.rotate(pos);
+				ctx.lineTo(0, -length);
+				ctx.stroke();
+				ctx.rotate(-pos);
+			}
+
+		}
+//game		
+
+	</script>
+</head>
+
+linear-gradient(to bottom, #24c1d1 10%, rgba(55, 189, 203, 0.16) 90%)
+<body onload="initialize()" class="container" style="background: linear-gradient(to bottom, #24c1d1 10%, rgba(55, 189, 203, 0.16) 90%); margin-top: 5px;">
+	<div class = "col-sm-12">
+			<div align="center" class="col-sm-12" style="padding-bottom: 50px;padding-top: 50px;padding-left: 100px;">
+
+				<canvas id="canvas" width="200" height="200" style="background-color:#333">
+				</canvas>
+			</div>
+			
+	</div>
+	<div class = "col-sm-12">
+		
+			<div class="col-sm-6" style="border: 3px solid white;">
+				<img src="./imageAnkut/village.gif" alt="Ankut" class="img-responsive" align="center" style="width: 100%;height:20%; padding-bottom: 1px;padding-top: 20px;padding-left: 0px;">
+				<div style="padding-bottom:10px"><span style="color: #FF1493"><b>Connect</b></span> with Friends and Family using Scraps and instant messaging<br>
+					<span style="color:#FF1493"><b>Share</b></span> with Friends and Family using Scraps and instant messaging<br>
+					<span style="color:#FF1493"><b>Cherish</b></span> with Friends and Family using Scraps and instant messaging<br>
+					<span style="color:#FF1493"><b>Educate</b></span> with Friends and Family using Scraps and instant messaging<br>
+				</div>
+			</div>
+
+			<div class="col-sm-6" style="border: 3px solid white;">
+				<form action="./scrapBook.php"  method="post"  style="width:100%; height:100%;padding-bottom: 80px;padding-right: 20px;padding-left: 90px;padding-top: 40px;">
+					<h3><b> Sign in with Your Google Account</b></h3><br>
+					<div class="col-sm-12"> 
+						<div  >	
+							<img class="img-responsive" style="padding-left:10px ; width:20%;" src="google.png" alt="googleIcons"><b>Account</b><br><br>
+						</div>
+					</div>
+					<div class="col-sm-12">
+					<label><b>Email:</b></label><input id="uname" type="text" placeholder="Enter Email." name="uname"><br><br>
+					<label><b>Password:</b></label><input id="upwd" type="text" placeholder="Enter Password." name="upwd"><br><br>
+					<button type="button" onclick="return checkname()" class="btn btn-primary" value="Submit" style="padding:10px">Sign in</button>
+					<button type="button" onclick="registration_page()" class="float-left" style="padding:10px">Register</button><br><br>
+					<input type="checkbox" value="" /> Remember me on This Computer
+					</div>
+				</form>
+			</div>
+
+	</div>
+</body>
+
+</html>
